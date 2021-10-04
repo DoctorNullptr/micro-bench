@@ -4,38 +4,25 @@ This project showcases the performance differences of a few C++ constructs vs th
 
 ## Prerequisites
 
-`google-benchmark` is required to build this project.
-
-### Google benchmark as a package
-
-To install it, run:
+`google-benchmark` is required to build this project; it is cloned and added a subdirectory.
 
 ```shell
+# at the toplevel of the source tree
 git clone https://github.com/google/benchmark.git
-cmake -S benchmark -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DCMAKE_BUILD_TYPE=Release -GNinja -B build-bm-rel 
-sudo cmake --install build-bm-rel
+cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DCMAKE_BUILD_TYPE=Release -S . -B build-release # configuration
 ```
-
-### Google benchmark as a subdirectory
-
-Alternatively, you may clone `google-benchmark` at the top of the source tree and use `add_subdirectory(benchmark)`
-instead of `find_package(benchmark)`.
 
 ## Running a benchmark
 
 ### Configuration
 
-Benchmarks matching `benches/*.cpp` are detected at configure step.
-
-```shell
-cmake -S . -B build-rel -DCMAKE_BUILD_TYPE=Release -GNinja
-```
+Benchmarks matching `benches/*.cpp` are detected at configure step, reconfigure to detect more.
 
 ### Building a target
 
 ```shell
-cmake --build build-rel  # build all targets
-cmake --build build-rel --target string_storage  # build only string_storage
+cmake --build build-release  # build all targets
+cmake --build build-release --target string_storage  # build only string_storage
 ```
 
 ### Launching a benchmark

@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.19)
 project(Benchmarks)
 
 set(CMAKE_CXX_STANDARD 17)
-find_package(benchmark REQUIRED)
 
+add_subdirectory(benchmark)
 
 # register benchmarks
 file(GLOB benchmark_files "${CMAKE_SOURCE_DIR}/benches/*.cpp")
