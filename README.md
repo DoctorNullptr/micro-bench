@@ -4,7 +4,7 @@ This project showcases the performance differences of a few C++ constructs vs th
 
 ## Prerequisites
 
-`google-benchmark` is required to build this project; it is cloned and added a subdirectory.
+`google-benchmark` is required to build this project; it is cloned and added as a subdirectory.
 
 ```shell
 # at the toplevel of the source tree
