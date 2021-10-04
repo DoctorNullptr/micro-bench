@@ -14,9 +14,8 @@ static void Map(benchmark::State &state) {
     std::map<int, std::string> mp{};
     populate_map(mp, state.range(0));
 
-    int at{};
     for ([[maybe_unused]] auto _: state) {
-        auto ref = mp.at(at++);
+        auto ref = mp.at(0);
         benchmark::DoNotOptimize(ref);
     }
 }
@@ -24,13 +23,13 @@ static void Map(benchmark::State &state) {
 BENCHMARK(Map)->Range(8, 1 << 1 << 16);
 
 
+
 static void HashMap(benchmark::State &state) {
     std::unordered_map<int, std::string> mp{};
     populate_map(mp, state.range(0));
 
-    int at{};
     for ([[maybe_unused]] auto _: state) {
-        auto ref = mp.at(at++);
+        auto ref = mp.at(0);
         benchmark::DoNotOptimize(ref);
     }
 }
