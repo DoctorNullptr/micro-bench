@@ -28,5 +28,5 @@ cmake --build build-release --target string_storage  # build only string_storage
 ### Launching a benchmark
 
 ```shell
-./build-rel/string_storage  # for example
+./build-release/string_storage  # for example
 ```
