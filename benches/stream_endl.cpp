@@ -12,17 +12,15 @@ public:
 
     ~TmpFile() { fs::remove(path); }
 
-    fs::path path;
+    const fs::path path;
 };
 
 void CoutEndl(benchmark::State &state) {
     TmpFile file{fs::path{"junk.txt"}};
-    {
-        auto stream{file.stream()};
-        for ([[maybe_unused]] auto _: state) {
-            stream << "Hello, world !" << std::endl;
-        }
-    }
+    auto stream{file.stream()};
+    for ([[maybe_unused]] auto _: state)
+        stream << "Hello, world !" << std::endl;
+
 }
 
 BENCHMARK(CoutEndl);
@@ -30,12 +28,9 @@ BENCHMARK(CoutEndl);
 
 void CoutRet(benchmark::State &state) {
     TmpFile file{fs::path{"junk.txt"}};
-    {
-        auto stream{file.stream()};
-        for ([[maybe_unused]] auto _: state) {
-            stream << "Hello, world !" << '\n';
-        }
-    }
+    auto stream{file.stream()};
+    for ([[maybe_unused]] auto _: state)
+        stream << "Hello, world !" << '\n';
 }
 
 BENCHMARK(CoutRet);
