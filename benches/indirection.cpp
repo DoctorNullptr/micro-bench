@@ -49,21 +49,6 @@ static void Vectored(benchmark::State &state) {
 BENCHMARK(Vectored);
 
 
-static void TooMuch(benchmark::State &state) {
-    for ([[maybe_unused]] auto _: state) {
-        std::array<std::pair<int, std::string_view>, 4> mp{{
-                                                                   {1, "foo"},
-                                                                   {2, "bar"},
-                                                                   {3, "baz"},
-                                                                   {4, "trt"},
-                                                           }};
-        benchmark::DoNotOptimize(mp);
-    }
-}
-
-BENCHMARK(TooMuch);
-
-
 static void InDirect(benchmark::State &state) {
     for ([[maybe_unused]] auto _: state) {
         std::map<int, std::string *> mp{
@@ -79,6 +64,20 @@ static void InDirect(benchmark::State &state) {
 }
 
 BENCHMARK(InDirect);
+
+static void DoesNotFree(benchmark::State &state) {
+    for ([[maybe_unused]] auto _: state) {
+        std::map<int, std::string *> mp{
+                {1, new std::string{"foo"}},
+                {2, new std::string{"bar"}},
+                {3, new std::string{"baz"}},
+                {4, new std::string{"trt"}},
+        };
+        benchmark::DoNotOptimize(mp);
+    }
+}
+
+BENCHMARK(DoesNotFree);
 
 
 BENCHMARK_MAIN();
