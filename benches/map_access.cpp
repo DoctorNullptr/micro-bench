@@ -36,5 +36,37 @@ static void HashMap(benchmark::State &state) {
 
 BENCHMARK(HashMap)->Range(8, 1 << 16);
 
+static void MapNC(benchmark::State &state) {
+    std::map<int, std::string> mp{};
+    populate_map(mp, state.range(0));
+    int where{1};
+
+    for ([[maybe_unused]] auto _: state) {
+        where *= 3;
+        while (where > mp.size()) where -= mp.size();
+        auto ref = mp.at(where);
+        benchmark::DoNotOptimize(ref);
+    }
+}
+
+BENCHMARK(MapNC)->Range(8, 1 << 16);
+
+
+
+static void HashMapNC(benchmark::State &state) {
+    std::unordered_map<int, std::string> mp{};
+    populate_map(mp, state.range(0));
+    int where{1};
+
+    for ([[maybe_unused]] auto _: state) {
+        where *= 3;
+        while (where > mp.size()) where -= mp.size();
+        auto ref = mp.at(where);
+        benchmark::DoNotOptimize(ref);
+    }
+}
+
+BENCHMARK(HashMapNC)->Range(8, 1 << 16);
+
 
 BENCHMARK_MAIN();
