@@ -30,7 +30,7 @@ auto dummy_payload(std::size_t n) {
 int task(const std::vector<int_pair> &pairs, std::string &pb) noexcept {
     int s{};
     for (auto[x, y]: pairs) {
-        if (x <= 0 and y <= 0)  {
+        if (x <= 0 and y <= 0) {
             pb = "negative-vector encountered :"s + std::to_string(x) + ", "s + std::to_string(y);
             return s; // whatever
         }
@@ -76,7 +76,6 @@ void InnerTryBlock(benchmark::State &state) {
             std::cerr << e.what() << '\n';
         }
     }
-
 }
 
 BENCHMARK(InnerTryBlock);
@@ -90,11 +89,25 @@ void OuterTryBlock(benchmark::State &state) {
     } catch (std::exception &e) {
         std::cerr << e.what() << '\n';
     }
-
 }
 
 BENCHMARK(OuterTryBlock);
 
+void DoesThrow(benchmark::State &state) {
+    auto pairs = dummy_payload(load_size);
+    pairs[load_size / 2] = {-1, 1};
+
+    for ([[maybe_unused]] auto _: state) {
+        std::size_t problems{};
+        try {
+            task_exc(pairs);
+        } catch (std::exception &e) {
+            ++problems;
+        }
+    }
+}
+
+BENCHMARK(DoesThrow);
 
 
 BENCHMARK_MAIN();
