@@ -5,8 +5,6 @@
 constexpr std::string_view text
         {"ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"};
 
-static_assert(text.size() >= 60);
-
 
 static void StoreString(benchmark::State &state) {
     const std::string s{text.data(), static_cast<std::size_t>(state.range(0))};
@@ -16,6 +14,9 @@ static void StoreString(benchmark::State &state) {
     }
 }
 
-BENCHMARK(StoreString)->DenseRange(12, 18);
+constexpr std::size_t max_len = 40;
+static_assert(text.size() >= max_len);
+
+BENCHMARK(StoreString)->DenseRange(0, max_len);
 
 BENCHMARK_MAIN();
