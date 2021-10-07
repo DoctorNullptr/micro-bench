@@ -20,7 +20,7 @@ static void Map(benchmark::State &state) {
     }
 }
 
-BENCHMARK(Map)->Range(8, 1 << 1 << 16);
+BENCHMARK(Map)->Range(8, 1 << 16);
 
 
 
